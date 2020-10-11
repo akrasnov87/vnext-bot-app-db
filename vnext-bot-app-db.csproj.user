@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Source>C:\Users\a-krasnov\Desktop\secure-logo.png</Source>
+    <SmallTileSource>C:\Users\a-krasnov\Desktop\secure-logo.png</SmallTileSource>
+    <MediumTileSource>C:\Users\a-krasnov\Desktop\secure-logo.png</MediumTileSource>
+    <WideTileSource>C:\Users\a-krasnov\Desktop\secure-logo.png</WideTileSource>
+    <LargeTileSource>C:\Users\a-krasnov\Desktop\secure-logo.png</LargeTileSource>
+    <AppIconSource>C:\Users\a-krasnov\Desktop\secure-logo.png</AppIconSource>
+    <SplashScreenSource>C:\Users\a-krasnov\Desktop\secure-logo.png</SplashScreenSource>
+    <BadgeLogoSource>C:\Users\a-krasnov\Desktop\secure-logo.png</BadgeLogoSource>
+    <PackageLogoSource>C:\Users\a-krasnov\Desktop\secure-logo.png</PackageLogoSource>
+    <UapAppxPackageBuildMode>SideloadOnly</UapAppxPackageBuildMode>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>x64</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <UseEmulator>true</UseEmulator>
+  </PropertyGroup>
+</Project>
