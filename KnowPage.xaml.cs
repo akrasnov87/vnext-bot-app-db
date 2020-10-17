@@ -30,34 +30,34 @@ namespace vNextBot.app
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class SettingPage : Page
+    public sealed partial class KnowPage : Page
     {
         private ILoaded loaded;
-        private ObservableCollection<Setting> settingList;
+        private ObservableCollection<KnowledgeBase> knowList;
         private ObservableCollection<KeyValue> types;
 
-        public SettingPage()
+        public KnowPage()
         {
             types = new ObservableCollection<KeyValue>();
-            settingList = new ObservableCollection<Setting>();
+            knowList = new ObservableCollection<KnowledgeBase>();
 
             InitializeComponent();
 
             types.Add(new KeyValue(0, "Все"));
             using(ApplicationContext db = new ApplicationContext())
             {
-                var query = from t in db.SettingTypes
+                var query = from t in db.Actions
                             orderby t.n_order
                             select t;
 
-                foreach(SettingTypes type in query)
+                foreach(vNextBot.Model.Action type in query)
                 {
-                    types.Add(new KeyValue(type.id, type.c_name));
+                    types.Add(new KeyValue(type.id, type.c_short_name));
                 }
             }
 
-            SettingType.ItemsSource = types;
-            SettingType.SelectedIndex = 0;
+            ActionType.ItemsSource = types;
+            ActionType.SelectedIndex = 0;
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -67,44 +67,50 @@ namespace vNextBot.app
             loaded = e.Parameter as ILoaded;
             loaded.OnSearchEvent += new EventHandler(OnSearch);
 
-            updateList(null);
+            updateList(null, null);
         }
 
-        public async void updateList(int? type)
+        public async void updateList(int? type, string search)
         {
             if (loaded != null)
             {
                 loaded.OnProgressStart("Обновление...");
             }
-            settingList.Clear();
+            knowList.Clear();
             using (ApplicationContext db = new ApplicationContext())
             {
-                var query = from t in db.Setting
-                            join t1 in db.SettingTypes on t.f_type equals t1.id
-                            orderby t.c_key
+                var query = from t in db.KnowledgeBases
+                            join t1 in db.Actions on t.f_action equals t1.id
+                            orderby t.dx_created descending
                             select new
                             {
                                 t.id,
-                                t.c_key,
-                                t.c_summary,
-                                t.c_value,
-                                t.f_type,
-                                t1.c_name
+                                t.c_question,
+                                t.jb_data,
+                                t.jb_tags,
+                                t.f_action,
+                                t1.c_short_name,
+                                t.dx_created,
+                                t.b_disabled
                             };
 
-                foreach(var item in type.HasValue ? query.Where(t => t.f_type == type.Value) : query) {
-                    settingList.Add(new Setting()
+                foreach(var item in string.IsNullOrEmpty(search) ? 
+                    (type.HasValue ? query.Where(t => t.f_action == type.Value) : query): 
+                    (type.HasValue ? query.Where(t => t.f_action == type.Value) : query).Where(t=>t.c_question.ToLower().Contains(search))) {
+                    knowList.Add(new KnowledgeBase()
                     {
                         id = item.id,
-                        c_key = item.c_key,
-                        c_summary = item.c_summary,
-                        c_value = item.c_value,
-                        f_type = item.f_type,
-                        TypeName = item.c_name
+                        c_question = item.c_question,
+                        jb_data = item.jb_data,
+                        jb_tags = item.jb_tags,
+                        b_disabled = item.b_disabled,
+                        dx_created = item.dx_created,
+                        ActionName = item.c_short_name,
+                        f_action = item.f_action
                     });
                 }
 
-                SettingList.ItemsSource = settingList;
+                KnowList.ItemsSource = knowList;
             }
 
             if (loaded != null)
@@ -115,7 +121,15 @@ namespace vNextBot.app
 
         public void OnSearch(Object sender, EventArgs e)
         {
-            
+            string searchText = (string)sender;
+            if (string.IsNullOrEmpty(searchText))
+            {
+                updateList(null, null);
+            }
+            else
+            {
+                updateList(null, searchText.ToLower());
+            }
         }
 
         /// <summary>
@@ -123,38 +137,38 @@ namespace vNextBot.app
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SettingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ActionType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            KeyValue keyValue = (KeyValue)SettingType.SelectedItem;
+            KeyValue keyValue = (KeyValue)ActionType.SelectedItem;
             if (keyValue.Id <= 0)
             {
-                updateList(null);
+                updateList(null, null);
             }
             else
             {
-                updateList(keyValue.Id);
+                updateList(keyValue.Id, null);
             }
         }
 
-        private async void AddSettingBtn_Click(object sender, RoutedEventArgs e)
+        private async void AddKnowBtn_Click(object sender, RoutedEventArgs e)
         {
-            SettingItemDialog dialog = new SettingItemDialog(null);
+            KnowItemDialog dialog = new KnowItemDialog(null);
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                updateList(null);
+                updateList(null, null);
             }
         }
 
-        private async void SettingList_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        private async void KnowList_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            Setting item = (Setting)((ListView)sender).SelectedItem;
+            KnowledgeBase item = (KnowledgeBase)((ListView)sender).SelectedItem;
 
-            SettingItemDialog dialog = new SettingItemDialog(item.id);
+            KnowItemDialog dialog = new KnowItemDialog(item.id);
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                updateList(null);
+                updateList(null, null);
             }
         }
 
@@ -171,21 +185,21 @@ namespace vNextBot.app
         {
             ContentDialog deleteDialog = new ContentDialog
             {
-                Title = "Удалить настройку?",
-                Content = "Удаление настройки может привести к потере данных. Действительно удалить настройку?",
+                Title = "Удалить запись?",
+                Content = "Удаление записи может привести к потере данных. Действительно удалить запись?",
                 PrimaryButtonText = "Удалить",
                 CloseButtonText = "Отменить"
             };
 
             ContentDialogResult result = await deleteDialog.ShowAsync();
-            if (result == ContentDialogResult.Primary && SettingList.SelectedItem is Setting)
+            if (result == ContentDialogResult.Primary && KnowList.SelectedItem is KnowledgeBase)
             {
-                Setting item = (Setting)SettingList.SelectedItem;
+                KnowledgeBase item = (KnowledgeBase)KnowList.SelectedItem;
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    db.Setting.Remove(item);
+                    db.KnowledgeBases.Remove(item);
                     db.SaveChanges();
-                    updateList(null);
+                    updateList(null, null);
                 }
             }
         }

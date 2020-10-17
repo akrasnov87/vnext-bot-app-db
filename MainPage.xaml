@@ -49,8 +49,8 @@
                 <ListBox Background="#2196F3" x:Name="menu" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
                     <ListBoxItem Name="secureLock">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource MenuItemIcon}" Text="&#xE72E;" />
-                            <TextBlock Style="{StaticResource MenuItemText}" Text="Доступ" />
+                            <TextBlock Style="{StaticResource MenuItemIcon}" Text="&#xE82D;" />
+                            <TextBlock Style="{StaticResource MenuItemText}" Text="База знаний" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Name="config">

@@ -1,0 +1,107 @@
+﻿<Page
+    x:Class="vNextBot.app.KnowPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local11="using:vNextBot.Model"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button" >
+            <Setter Property="Background" Value="#4dabf5" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        
+        <Style x:Key="TableHeaderStyle" TargetType="TextBlock" >
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="#ECEFF1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="#4dabf5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox Grid.Column="0" Width="190" PlaceholderText="Тип" x:Name="ActionType" Margin="10 0 0 0" SelectionChanged="ActionType_SelectionChanged" VerticalAlignment="Center" />
+
+            <Button Style="{StaticResource ButtonStyle}" Grid.Column="2" x:Name="AddKnowBtn" Margin="0 0 10 0" Content="Создать новую запись" HorizontalAlignment="Center" Click="AddKnowBtn_Click">
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Создать новую запись" />
+                </ToolTipService.ToolTip>
+            </Button>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Visible">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border BorderThickness="0 0 0 1" BorderBrush="Gray" Grid.Row="0" Background="#64b5f6">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="500" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Тип" Grid.Column="0" Style="{StaticResource TableHeaderStyle}" />
+                        <TextBlock Text="Вопрос" Grid.Column="1" Style="{StaticResource TableHeaderStyle}" />
+                        <TextBlock Text="Метки" Grid.Column="2"  Style="{StaticResource TableHeaderStyle}" />
+                        <TextBlock Text="Дата" Grid.Column="3"  Style="{StaticResource TableHeaderStyle}" />
+                        <TextBlock Text="Отключен" Grid.Column="4" Style="{StaticResource TableHeaderStyle}" />
+                    </Grid>
+                </Border>
+
+                <ListView Name="KnowList" Grid.Row="1" SelectionMode="Single" DoubleTapped="KnowList_DoubleTapped" IsItemClickEnabled="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local11:KnowledgeBase">
+                            <Grid RightTapped="Grid_RightTapped" VerticalAlignment="Stretch">
+                                <FlyoutBase.AttachedFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem x:Name="ItemDelete" Text="Удалить" Click="ItemDelete_Click"/>
+                                    </MenuFlyout>
+                                </FlyoutBase.AttachedFlyout>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="500" />
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="150" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{x:Bind ActionName}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Bind c_question}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" />
+                                <TextBlock Text="{x:Bind GetTags()}" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                <TextBlock Text="{x:Bind GetDate()}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Bind GetDisabled()}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

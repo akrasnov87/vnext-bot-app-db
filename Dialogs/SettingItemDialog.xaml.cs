@@ -1,5 +1,4 @@
 ﻿using vNextBot.app.Model;
-using vNextBot.app.Utils;
 using vNextBot.Model;
 using System;
 using System.Collections.Generic;
@@ -27,15 +26,6 @@ namespace vNextBot.app.Dialogs
         private ObservableCollection<SettingTypes> settingTypes;
 
         private int? id;
-
-        public SettingItemDialog(string key, int type, string label): 
-            this(null)
-        {
-            Key.Text = key;
-            Type.SelectedValue = settingTypes.First(t => t.id == type);
-            Label.Text = label;
-
-        }
 
         public SettingItemDialog(int? id)
         {

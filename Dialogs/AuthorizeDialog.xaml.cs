@@ -1,5 +1,4 @@
-﻿using vNextBot.app.Utils;
-using vNextBot.Model;
+﻿using vNextBot.Model;
 using vNextBot.Utils;
 using System;
 using System.Collections.Generic;

@@ -16,39 +16,50 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using vNextBot.Utils;
 
 // Документацию по шаблону элемента "Диалоговое окно содержимого" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace vNextBot.app.Dialogs
 {
-    public sealed partial class UserItemDialog : ContentDialog
+    public sealed partial class KnowItemDialog : ContentDialog
     {
-        private int? id;
+        private ObservableCollection<vNextBot.Model.Action> actionTypes;
 
-        public UserItemDialog(int? id)
+        private Guid? id;
+
+        public KnowItemDialog(Guid? id)
         {
             this.id = id;
+
+            actionTypes = new ObservableCollection<vNextBot.Model.Action>();
+
+            using(ApplicationContext db = new ApplicationContext())
+            {
+                foreach(vNextBot.Model.Action item in db.Actions)
+                {
+                    actionTypes.Add(item);
+                }
+            }
+
             InitializeComponent();
+
+            Type.ItemsSource = actionTypes;
 
             if (id.HasValue)
             {
-                Login.IsEnabled = false;
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    User item = db.Users.Find(id);
-                    Login.Text = item.c_login.ToEmpty();
-                    FIO.Text = item.c_fio.ToEmpty();
-                    
-                    Description.Text = item.c_description.ToEmpty();
+                    KnowledgeBase item = db.KnowledgeBases.Find(id);
+                    Question.Text = item.c_question;
+                    Tags.Text = item.GetTags();
+                    Type.SelectedValue = actionTypes.First(t => t.id == item.f_action);
+                    Url.Text = item.GetUrl();
+                    Title.Text = item.GetTitle();
                     IsDisabled.IsChecked = item.b_disabled;
-                    IsAuthorized.IsChecked = item.b_authorize;
+                    Date.Text = item.GetDate();
                 }
-            } else
-            {
-                IsDisabled.IsChecked = true;
-                IsDisabled.IsEnabled = false;
-                IsAuthorized.IsEnabled = false;
+            } else {
+                Type.SelectedValue = actionTypes.First(t => t.c_const == "TEXT");
             }
         }
 
@@ -62,42 +73,46 @@ namespace vNextBot.app.Dialogs
             resetSummary();
             using (ApplicationContext db = new ApplicationContext())
             {
-                User user;
+                KnowledgeBase setting;
 
                 if (id.HasValue)
                 {
-                    user = db.Users.Find(id);
+                    setting = db.KnowledgeBases.Find(id);
                 }
                 else
                 {
                     // создание
-                    user = new User();
-                    user.c_domain = "Compulink";
-                    user.b_disabled = true;
+                    setting = new KnowledgeBase();
+                    setting.dx_created = new DateTime();
                 }
 
-                user.c_fio = FIO.Text;
-                user.c_description = Description.Text;
+                setting.c_question = Question.Text;
+                setting.jb_tags = Newtonsoft.Json.JsonConvert.SerializeObject(Tags.Text.Split(", "));
+                setting.f_action = ((vNextBot.Model.Action)Type.SelectedValue).id;
+                setting.b_disabled = IsDisabled.IsChecked.Value;
 
-                user.b_disabled = IsDisabled.IsChecked.Value;
-                user.b_authorize = IsAuthorized.IsChecked.Value;
+                dynamic data = new { 
+                    url = Url.Text,
+                    title = Title.Text
+                };
+                setting.jb_data = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 
                 if (id.HasValue)
                 {
-                    db.Users.Update(user);
+                    db.KnowledgeBases.Update(setting);
                 } else
                 {
-                    var query = from t in db.Users
-                                where t.c_login == user.c_login
+                    var query = from t in db.KnowledgeBases
+                                where t.c_question == setting.c_question
                                 select t;
                     if (query.Count() > 0)
                     {
-                        setSummary("Аккаунт " + user.c_login + " существует.");
+                        setSummary("Запись с вопросом " + setting.c_question + " существует.");
                         args.Cancel = true;
                     }
                     else
                     {
-                        db.Users.Add(user);
+                        db.KnowledgeBases.Add(setting);
                     }
                 }
                 db.SaveChanges();

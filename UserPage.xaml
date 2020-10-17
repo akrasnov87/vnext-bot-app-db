@@ -59,21 +59,23 @@
                             <ColumnDefinition Width="40" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="300" />
-                            <ColumnDefinition Width="400" />
+                            
                             <ColumnDefinition Width="150" />
                             <ColumnDefinition Width="150" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="400" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="#" Grid.Column="0" Style="{StaticResource TableHeaderStyle}" />
                         <TextBlock Text="Логин" Grid.Column="1" Style="{StaticResource TableHeaderStyle}" />
                         <TextBlock Text="ФИО" Grid.Column="2"  Style="{StaticResource TableHeaderStyle}" />
-                        <TextBlock Text="Описание" Grid.Column="3" Style="{StaticResource TableHeaderStyle}" />
-                        <TextBlock Text="Отключен" Grid.Column="4" Style="{StaticResource TableHeaderStyle}" />
-                        <TextBlock Text="Авторизован" Grid.Column="5" Style="{StaticResource TableHeaderStyle}" />
-                        <TextBlock Text="ПИН" Grid.Column="6" Style="{StaticResource TableHeaderStyle}" />
-                        <TextBlock Text="Команда" Grid.Column="7" Style="{StaticResource TableHeaderStyle}" />
+                        
+                        <TextBlock Text="Отключен" Grid.Column="3" Style="{StaticResource TableHeaderStyle}" />
+                        <TextBlock Text="Авторизован" Grid.Column="4" Style="{StaticResource TableHeaderStyle}" />
+                        <TextBlock Text="ПИН" Grid.Column="5" Style="{StaticResource TableHeaderStyle}" />
+                        <TextBlock Text="Команда" Grid.Column="6" Style="{StaticResource TableHeaderStyle}" />
+                        <TextBlock Text="Описание" Grid.Column="7" Style="{StaticResource TableHeaderStyle}" />
                     </Grid>
                 </Border>
 
@@ -92,21 +94,23 @@
                                     <ColumnDefinition Width="40" />
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="300" />
-                                    <ColumnDefinition Width="400" />
+                                    
                                     <ColumnDefinition Width="150" />
                                     <ColumnDefinition Width="150" />
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="400" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind id}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind c_login}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
                                 <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind c_fio}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind c_description}" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" />
-                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind GetDisabled()}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind GetAuthorize()}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind GetPin()}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind c_team}" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                
+                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind GetDisabled()}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind GetAuthorize()}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind GetPin()}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind c_team}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Foreground="{x:Bind getTextColor()}" Text="{x:Bind c_description}" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

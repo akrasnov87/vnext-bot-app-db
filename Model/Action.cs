@@ -24,7 +24,7 @@ namespace vNextBot.Model
 
         public override string ToString()
         {
-            return c_name;
+            return c_short_name;
         }
     }
 }

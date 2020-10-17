@@ -131,6 +131,9 @@
     <Compile Include="Dialogs\AuthorizeDialog.xaml.cs">
       <DependentUpon>AuthorizeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\KnowItemDialog.xaml.cs">
+      <DependentUpon>KnowItemDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\UserItemDialog.xaml.cs">
       <DependentUpon>UserItemDialog.xaml</DependentUpon>
     </Compile>
@@ -148,12 +151,12 @@
     <Compile Include="Model\ApplicationContext.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Model\SettingTypes.cs" />
-    <Compile Include="Model\SortDirection.cs" />
-    <Compile Include="Model\SortItem.cs" />
-    <Compile Include="Model\FilterItem.cs" />
     <Compile Include="Model\KeyValue.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="KnowPage.xaml.cs">
+      <DependentUpon>KnowPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
@@ -161,7 +164,6 @@
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\FileIO.cs" />
-    <Compile Include="Utils\Loader.cs" />
     <Compile Include="Utils\StringExtension.cs" />
     <Compile Include="Utils\VersionUtil.cs" />
   </ItemGroup>
@@ -226,7 +228,6 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="available-updates.png" />
     <Content Include="logo.png" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
@@ -239,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dialogs\KnowItemDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\UserItemDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -248,6 +253,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="KnowPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

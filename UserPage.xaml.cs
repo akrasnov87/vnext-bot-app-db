@@ -1,6 +1,4 @@
 ﻿using vNextBot.app.Dialogs;
-using vNextBot.app.Model;
-using vNextBot.app.Utils;
 using vNextBot.Model;
 using vNextBot.Utils;
 using System;
@@ -50,10 +48,10 @@ namespace vNextBot.app
             loaded = e.Parameter as ILoaded;
             loaded.OnSearchEvent += new EventHandler(OnSearch);
 
-            updateList();
+            updateList(null);
         }
 
-        public async void updateList()
+        public async void updateList(string searchText)
         {
             if (loaded != null)
             {
@@ -66,7 +64,7 @@ namespace vNextBot.app
                             orderby u.c_login
                             select u;
 
-                foreach(var item in query) {
+                foreach(var item in string.IsNullOrEmpty(searchText) ? query : query.Where(t=>t.c_login.ToLower().Contains(searchText) || t.c_fio.ToLower().Contains(searchText))) {
                     userList.Add(item);
                 }
 
@@ -81,7 +79,15 @@ namespace vNextBot.app
 
         public void OnSearch(Object sender, EventArgs e)
         {
-            
+            string searchText = (string)sender;
+            if (string.IsNullOrEmpty(searchText))
+            {
+                updateList(null);
+            }
+            else
+            {
+                updateList(searchText.ToLower());
+            }
         }
 
         private async void AddUserBtn_Click(object sender, RoutedEventArgs e)
@@ -90,7 +96,7 @@ namespace vNextBot.app
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                updateList();
+                updateList(null);
             }
         }
 
@@ -102,7 +108,7 @@ namespace vNextBot.app
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                updateList();
+                updateList(null);
             }
         }
 
@@ -133,7 +139,7 @@ namespace vNextBot.app
                 {
                     db.Users.Remove(item);
                     db.SaveChanges();
-                    updateList();
+                    updateList(null);
                 }
             }
         }
@@ -161,7 +167,7 @@ namespace vNextBot.app
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     db.UserReset(item.id);
-                    updateList();
+                    updateList(null);
                 }
             }
         }

@@ -45,7 +45,7 @@ namespace vNextBot.app
         public MainPage()
         {
             InitializeComponent();
-            TitleTextBlock.Text = "Доступ";
+            TitleTextBlock.Text = "База знаний";
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -58,7 +58,7 @@ namespace vNextBot.app
             {
                 ConnectionLine.Text = ApplicationContext.getConnectionLine() + " ver. " + VersionUtil.GetAppVersion();
                 TitleTextBlock.Text = "База знаний";
-                myFrame.Navigate(typeof(SettingPage), this);
+                myFrame.Navigate(typeof(KnowPage), this);
             }
         }
 
@@ -69,8 +69,8 @@ namespace vNextBot.app
             SearchEvent = null;
             if (secureLock.IsSelected)
             {
-                TitleTextBlock.Text = "Доступ";
-                myFrame.Navigate(typeof(SettingPage), this);
+                TitleTextBlock.Text = "База знаний";
+                myFrame.Navigate(typeof(KnowPage), this);
             } else if (config.IsSelected)
             {
                 Search.Visibility = Visibility.Collapsed;
@@ -79,7 +79,7 @@ namespace vNextBot.app
             }
             else if (accounts.IsSelected)
             {
-                Search.Visibility = Visibility.Collapsed;
+                Search.Visibility = Visibility.Visible;
                 TitleTextBlock.Text = "Аккаунты";
                 myFrame.Navigate(typeof(UserPage), this);
             }
