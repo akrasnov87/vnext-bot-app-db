@@ -6,18 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RpcSecurity.Model
+namespace vNextBot.Model
 {
-    [Table("pd_roles", Schema = "core")]
-    public class Role
+    [Table("cs_actions", Schema = "dbo")]
+    public class Action
     {
         [Key]
         public int id { get; set; }
 
+        public int n_code { get; set; }
         public string c_name { get; set; }
-        public string c_description { get; set; }
-        public int n_weight { get; set; }
-        public bool sn_delete { get; set; }
+        public string c_short_name { get; set; }
+        public string c_const { get; set; }
+        public int n_order { get; set; }
+        public bool b_default { get; set; }
+        public bool b_disabled { get; set; }
 
         public override string ToString()
         {

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RpcSecurity.Model
+namespace vNextBot.Model
 {
-    [Table("cs_setting_types", Schema = "core")]
+    [Table("cs_setting_types", Schema = "dbo")]
     public class SettingTypes
     {
         [Key]

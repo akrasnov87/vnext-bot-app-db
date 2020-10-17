@@ -1,6 +1,6 @@
-﻿using RpcSecurity.app.Utils;
-using RpcSecurity.Model;
-using RpcSecurity.Utils;
+﻿using vNextBot.app.Utils;
+using vNextBot.Model;
+using vNextBot.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace RpcSecurity.app
+namespace vNextBot.app
 {
     /// <summary>
     /// Обеспечивает зависящее от конкретного приложения поведение, дополняющее класс Application по умолчанию.
@@ -39,19 +39,7 @@ namespace RpcSecurity.app
         private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
-            using(ApplicationContext db = new ApplicationContext())
-            {
-                db.ClientErrors.Add(new ClientError() { 
-                    id = Guid.NewGuid(),
-                    c_code = "UI001E",
-                    c_message = e.Exception.ToString(),
-                    c_platform = "UWP",
-                    c_version = VersionUtil.GetAppVersion(),
-                    d_created = DateTime.Now,
-                    fn_user = -1,
-                });
-                db.SaveChanges();
-            }
+            // тут можно обработать ошибку
         }
 
         /// <summary>

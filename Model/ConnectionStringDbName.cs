@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RpcSecurity.Model
+namespace vNextBot.Model
 {
     public class ConnectionStringDbName : ConnectionString
     {

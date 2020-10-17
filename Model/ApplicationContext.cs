@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinRTXamlToolkit.IO.Serialization;
 
-namespace RpcSecurity.Model
+namespace vNextBot.Model
 {
     public class ApplicationContext : DbContext
     {
@@ -34,12 +36,22 @@ namespace RpcSecurity.Model
         }
         public DbSet<Setting> Setting { get; set; }
         public DbSet<SettingTypes> SettingTypes { get; set; }
-        public DbSet<Digests> Digests { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<Action> Actions { get; set; }
+        public DbSet<KnowledgeBase> KnowledgeBases { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Division> Divisions { get; set; }
-        public DbSet<Accesses> Accesses { get; set; }
-        public DbSet<Objects> Objects { get; set; }
-        public DbSet<ClientError> ClientErrors { get; set; }
+
+        public object UserReset(int id)
+        {
+            using (var command = Database.GetDbConnection().CreateCommand())
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "dbo.cf_user_reset";
+                command.Parameters.Add(new Npgsql.NpgsqlParameter("_f_user", NpgsqlTypes.NpgsqlDbType.Integer)
+                { Value = id });
+                if (command.Connection.State == ConnectionState.Closed)
+                    command.Connection.Open();
+                return command.ExecuteScalar();
+            }
+        }
     }
 }

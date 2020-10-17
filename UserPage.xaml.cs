@@ -31,34 +31,16 @@ namespace vNextBot.app
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class SettingPage : Page
+    public sealed partial class UserPage : Page
     {
         private ILoaded loaded;
-        private ObservableCollection<Setting> settingList;
-        private ObservableCollection<KeyValue> types;
+        private ObservableCollection<User> userList;
 
-        public SettingPage()
+        public UserPage()
         {
-            types = new ObservableCollection<KeyValue>();
-            settingList = new ObservableCollection<Setting>();
+            userList = new ObservableCollection<User>();
 
             InitializeComponent();
-
-            types.Add(new KeyValue(0, "Все"));
-            using(ApplicationContext db = new ApplicationContext())
-            {
-                var query = from t in db.SettingTypes
-                            orderby t.n_order
-                            select t;
-
-                foreach(SettingTypes type in query)
-                {
-                    types.Add(new KeyValue(type.id, type.c_name));
-                }
-            }
-
-            SettingType.ItemsSource = types;
-            SettingType.SelectedIndex = 0;
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -68,44 +50,27 @@ namespace vNextBot.app
             loaded = e.Parameter as ILoaded;
             loaded.OnSearchEvent += new EventHandler(OnSearch);
 
-            updateList(null);
+            updateList();
         }
 
-        public async void updateList(int? type)
+        public async void updateList()
         {
             if (loaded != null)
             {
                 loaded.OnProgressStart("Обновление...");
             }
-            settingList.Clear();
+            userList.Clear();
             using (ApplicationContext db = new ApplicationContext())
             {
-                var query = from t in db.Setting
-                            join t1 in db.SettingTypes on t.f_type equals t1.id
-                            orderby t.c_key
-                            select new
-                            {
-                                t.id,
-                                t.c_key,
-                                t.c_summary,
-                                t.c_value,
-                                t.f_type,
-                                t1.c_name
-                            };
+                var query = from u in db.Users
+                            orderby u.c_login
+                            select u;
 
-                foreach(var item in type.HasValue ? query.Where(t => t.f_type == type.Value) : query) {
-                    settingList.Add(new Setting()
-                    {
-                        id = item.id,
-                        c_key = item.c_key,
-                        c_summary = item.c_summary,
-                        c_value = item.c_value,
-                        f_type = item.f_type,
-                        TypeName = item.c_name
-                    });
+                foreach(var item in query) {
+                    userList.Add(item);
                 }
 
-                SettingList.ItemsSource = settingList;
+                UserList.ItemsSource = userList;
             }
 
             if (loaded != null)
@@ -119,43 +84,25 @@ namespace vNextBot.app
             
         }
 
-        /// <summary>
-        /// Тип настройки
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SettingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void AddUserBtn_Click(object sender, RoutedEventArgs e)
         {
-            KeyValue keyValue = (KeyValue)SettingType.SelectedItem;
-            if (keyValue.Id <= 0)
-            {
-                updateList(null);
-            }
-            else
-            {
-                updateList(keyValue.Id);
-            }
-        }
-
-        private async void AddSettingBtn_Click(object sender, RoutedEventArgs e)
-        {
-            SettingItemDialog dialog = new SettingItemDialog(null);
+            UserItemDialog dialog = new UserItemDialog(null);
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                updateList(null);
+                updateList();
             }
         }
 
-        private async void SettingList_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        private async void UserList_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            Setting item = (Setting)((ListView)sender).SelectedItem;
+            User item = (User)((ListView)sender).SelectedItem;
 
-            SettingItemDialog dialog = new SettingItemDialog(item.id);
+            UserItemDialog dialog = new UserItemDialog(item.id);
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                updateList(null);
+                updateList();
             }
         }
 
@@ -173,20 +120,20 @@ namespace vNextBot.app
             ContentDialog deleteDialog = new ContentDialog
             {
                 Title = "Удалить настройку?",
-                Content = "Удаление настройки может привести к потере данных. Действительно удалить настройку?",
+                Content = "Удаление аккаунта может привести к потере данных. Действительно удалить аккаунт?",
                 PrimaryButtonText = "Удалить",
                 CloseButtonText = "Отменить"
             };
 
             ContentDialogResult result = await deleteDialog.ShowAsync();
-            if (result == ContentDialogResult.Primary && SettingList.SelectedItem is Setting)
+            if (result == ContentDialogResult.Primary && UserList.SelectedItem is User)
             {
-                Setting item = (Setting)SettingList.SelectedItem;
+                User item = (User)UserList.SelectedItem;
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    db.Setting.Remove(item);
+                    db.Users.Remove(item);
                     db.SaveChanges();
-                    updateList(null);
+                    updateList();
                 }
             }
         }
@@ -195,6 +142,28 @@ namespace vNextBot.app
         {
             var messageDialog = new MessageDialog(message);
             await messageDialog.ShowAsync();
+        }
+
+        private async void ItemReset_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog deleteDialog = new ContentDialog
+            {
+                Title = "Сбросить информацию?",
+                Content = "Потребуется повторная авторизация. Действительно сбросить аккаунт?",
+                PrimaryButtonText = "Сбросить",
+                CloseButtonText = "Отменить"
+            };
+
+            ContentDialogResult result = await deleteDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary && UserList.SelectedItem is User)
+            {
+                User item = (User)UserList.SelectedItem;
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    db.UserReset(item.id);
+                    updateList();
+                }
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RpcSecurity.app.Model
+namespace vNextBot.app.Model
 {
     public enum SortDirection
     {

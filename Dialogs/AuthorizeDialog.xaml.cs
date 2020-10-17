@@ -1,6 +1,6 @@
-﻿using RpcSecurity.app.Utils;
-using RpcSecurity.Model;
-using RpcSecurity.Utils;
+﻿using vNextBot.app.Utils;
+using vNextBot.Model;
+using vNextBot.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 
 // Документацию по шаблону элемента "Диалоговое окно содержимого" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace RpcSecurity.app.Dialogs
+namespace vNextBot.app.Dialogs
 {
     public sealed partial class AuthorizeDialog : ContentDialog
     {

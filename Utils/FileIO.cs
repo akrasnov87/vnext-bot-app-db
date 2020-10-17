@@ -1,4 +1,4 @@
-﻿using RpcSecurity.Model;
+﻿using vNextBot.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace RpcSecurity.Utils
+namespace vNextBot.Utils
 {
     public class FileIO
     {

@@ -1,4 +1,4 @@
-﻿using RpcSecurity.Model;
+﻿using vNextBot.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace RpcSecurity.app.Utils
+namespace vNextBot.app.Utils
 {
     public class Loader
     {
@@ -156,25 +156,6 @@ namespace RpcSecurity.app.Utils
             response.Close();
 
             return result;
-        }
-
-
-        public async Task<int> FileUpload(StorageFile file)
-        {
-            var bytes = await GetBytesAsync(file);
-            using(ApplicationContext db = new ApplicationContext())
-            {
-                ApkReader.ApkReader apkReader = new ApkReader.ApkReader();
-                MemoryStream memoryStream = new MemoryStream(bytes);
-                string versionName = apkReader.Read(memoryStream).VersionName;
-
-                db.Digests.Add(new Digests()
-                {
-                    c_version = versionName,
-                    ba_file = bytes
-                });
-                return await db.SaveChangesAsync();
-            }
         }
 
         public async Task<string> GetVersion()

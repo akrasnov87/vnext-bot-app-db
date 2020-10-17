@@ -1,6 +1,6 @@
-﻿using RpcSecurity.app.Dialogs;
-using RpcSecurity.Model;
-using RpcSecurity.Utils;
+﻿using vNextBot.app.Dialogs;
+using vNextBot.Model;
+using vNextBot.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
-namespace RpcSecurity.app
+namespace vNextBot.app
 {
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
@@ -57,8 +57,8 @@ namespace RpcSecurity.app
             if (result == ContentDialogResult.Primary)
             {
                 ConnectionLine.Text = ApplicationContext.getConnectionLine() + " ver. " + VersionUtil.GetAppVersion();
-                TitleTextBlock.Text = "Доступ";
-                myFrame.Navigate(typeof(AccessesPage), this);
+                TitleTextBlock.Text = "База знаний";
+                myFrame.Navigate(typeof(SettingPage), this);
             }
         }
 
@@ -70,18 +70,18 @@ namespace RpcSecurity.app
             if (secureLock.IsSelected)
             {
                 TitleTextBlock.Text = "Доступ";
-                myFrame.Navigate(typeof(AccessesPage), this);
+                myFrame.Navigate(typeof(SettingPage), this);
             } else if (config.IsSelected)
             {
                 Search.Visibility = Visibility.Collapsed;
                 TitleTextBlock.Text = "Настройки";
                 myFrame.Navigate(typeof(SettingPage), this);
             }
-            else if (update.IsSelected)
+            else if (accounts.IsSelected)
             {
                 Search.Visibility = Visibility.Collapsed;
-                TitleTextBlock.Text = "Обновление APK";
-                myFrame.Navigate(typeof(UpdatePage), this);
+                TitleTextBlock.Text = "Аккаунты";
+                myFrame.Navigate(typeof(UserPage), this);
             }
             else if (help.IsSelected)
             {

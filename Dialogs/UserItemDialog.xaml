@@ -1,5 +1,5 @@
 ﻿<ContentDialog
-    x:Class="vNextBot.app.Dialogs.SettingItemDialog"
+    x:Class="vNextBot.app.Dialogs.UserItemDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:vNextBot.app.Dialogs"
@@ -19,6 +19,10 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -28,16 +32,17 @@
 
         <TextBlock Name="Summary" Grid.Row="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" TextWrapping="Wrap" />
 
-        <TextBlock Text="Ключ" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="Key" Margin="0 10 0 0" Grid.Row="1" Grid.Column="1" />
+        <TextBlock Text="Логин" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+        <TextBox x:Name="Login" Margin="0 10 0 0" Grid.Row="1" Grid.Column="1" IsReadOnly="True" />
 
-        <TextBlock Text="Значение" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="Value" Margin="0 10 0 0" Grid.Row="2" Grid.Column="1" />
+        <TextBlock Text="ФИО" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+        <TextBox x:Name="FIO" Margin="0 10 0 0" Grid.Row="2" Grid.Column="1" />
 
-        <TextBlock Text="Тип" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-        <ComboBox PlaceholderText="Тип" Grid.Row="3" Grid.Column="1" x:Name="Type" Margin="0 10 0 0" />
+        <TextBlock Text="Описание" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+        <TextBox x:Name="Description" Margin="0 10 0 0" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Height="50" />
 
-        <TextBlock Text="Описание" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="Label" Margin="0 10 0 0" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Height="50" />
+        <CheckBox FlowDirection="LeftToRight" Grid.Row="4" x:Name="IsDisabled" Content="Отключен" IsChecked="False" Grid.ColumnSpan="2" />
+
+        <CheckBox FlowDirection="LeftToRight" Grid.Row="5" x:Name="IsAuthorized" Content="Авторизован" IsChecked="False" Grid.ColumnSpan="2" />
     </Grid>
 </ContentDialog>

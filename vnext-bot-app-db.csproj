@@ -7,8 +7,8 @@
     <ProjectGuid>{49AF155C-F99C-40EC-844B-3064793BD324}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RpcSecurity</RootNamespace>
-    <AssemblyName>rpc-security</AssemblyName>
+    <RootNamespace>vNextBot</RootNamespace>
+    <AssemblyName>vnext-bot</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
@@ -19,7 +19,7 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-    <PackageCertificateThumbprint>1B102BBF46F824129DADF0502A1BB3F483EDDCB1</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>1475B5147A3CD21FBC55BCDA26DFDCB02700E92E</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
@@ -128,14 +128,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\WebTokenAuthorizeDialog.xaml.cs">
-      <DependentUpon>WebTokenAuthorizeDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\AuthorizeDialog.xaml.cs">
       <DependentUpon>AuthorizeDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\AccessesItemDialog.xaml.cs">
-      <DependentUpon>AccessesItemDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\UserItemDialog.xaml.cs">
+      <DependentUpon>UserItemDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SettingItemDialog.xaml.cs">
       <DependentUpon>SettingItemDialog.xaml</DependentUpon>
@@ -144,16 +141,11 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\ClientError.cs" />
+    <Compile Include="Model\Action.cs" />
     <Compile Include="Model\ConnectionStringDbName.cs" />
     <Compile Include="Model\ConnectionString.cs" />
-    <Compile Include="Model\Objects.cs" />
-    <Compile Include="Model\SimpleAccesses.cs" />
-    <Compile Include="Model\Accesses.cs" />
+    <Compile Include="Model\KnowledgeBase.cs" />
     <Compile Include="Model\ApplicationContext.cs" />
-    <Compile Include="Model\Digests.cs" />
-    <Compile Include="Model\Division.cs" />
-    <Compile Include="Model\Role.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Model\SettingTypes.cs" />
     <Compile Include="Model\SortDirection.cs" />
@@ -162,17 +154,15 @@
     <Compile Include="Model\KeyValue.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AccessesPage.xaml.cs">
-      <DependentUpon>AccessesPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UpdatePage.xaml.cs">
-      <DependentUpon>UpdatePage.xaml</DependentUpon>
+    <Compile Include="UserPage.xaml.cs">
+      <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\FileIO.cs" />
     <Compile Include="Utils\Loader.cs" />
+    <Compile Include="Utils\StringExtension.cs" />
     <Compile Include="Utils\VersionUtil.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -245,15 +235,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Dialogs\WebTokenAuthorizeDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Dialogs\AuthorizeDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\AccessesItemDialog.xaml">
+    <Page Include="Dialogs\UserItemDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -265,11 +251,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AccessesPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UpdatePage.xaml">
+    <Page Include="UserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -294,9 +276,6 @@
     <PackageReference Include="WinRTXamlToolkit.Controls.DataVisualization.UWP">
       <Version>2.3.0</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="key.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
