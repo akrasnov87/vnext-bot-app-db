@@ -14,7 +14,7 @@
   <Identity
     Name="259b38be-d2b3-469c-bd38-44c79a875547"
     Publisher="CN=akras"
-    Version="1.0.1.0" />
+    Version="1.0.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="c478f87f-fd0e-4ac0-a846-1482a454362c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

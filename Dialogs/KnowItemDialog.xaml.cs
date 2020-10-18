@@ -128,7 +128,7 @@ namespace vNextBot.app.Dialogs
                 {
                     // создание
                     setting = new KnowledgeBase();
-                    setting.dx_created = new DateTime();
+                    setting.dx_created = DateTime.Now;
                 }
 
                 setting.c_question = Question.Text;
