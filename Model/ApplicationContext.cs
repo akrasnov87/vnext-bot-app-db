@@ -53,5 +53,37 @@ namespace vNextBot.Model
                 return command.ExecuteScalar();
             }
         }
+
+        public List<string> GetTags()
+        {
+            List<string> tags = new List<string>();
+            using (var command = Database.GetDbConnection().CreateCommand())
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "dbo.cf_ui_tags";
+                if (command.Connection.State == ConnectionState.Closed)
+                    command.Connection.Open();
+                try
+                {
+                    using (DbDataReader dbDataReader = command.ExecuteReader())
+                    {
+                        if (dbDataReader.HasRows)
+                        {
+                            while (dbDataReader.Read())
+                            {
+                                string tag = dbDataReader.GetString(0);
+                                tags.Add(tag);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
+            return tags;
+        }
     }
 }

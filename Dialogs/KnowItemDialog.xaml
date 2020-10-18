@@ -35,10 +35,10 @@
         <TextBox x:Name="Question" Margin="0 10 0 0" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Height="50" />
 
         <TextBlock Text="Тип" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-        <ComboBox PlaceholderText="Тип" Grid.Row="2" Grid.Column="1" x:Name="Type" Margin="0 10 0 0" />
+        <ComboBox PlaceholderText="Тип" Grid.Row="2" Grid.Column="1" x:Name="Type" Margin="0 10 0 0" SelectionChanged="Type_SelectionChanged" />
         
         <TextBlock Text="Метки" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="Tags" Margin="0 10 0 0" Grid.Row="3" Grid.Column="1" PlaceholderText="Указывать через запятую" />
+        <AutoSuggestBox QueryIcon="Find" x:Name="Tags" Margin="0 10 0 0" Grid.Row="3" PlaceholderText="Указывать через запятую" Grid.Column="1" TextChanged="Tags_TextChanged" SuggestionChosen="Tags_SuggestionChosen" />
 
         <TextBlock Text="url" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
         <TextBox Grid.Row="4" Grid.Column="1" x:Name="Url" Margin="0 10 0 0" />

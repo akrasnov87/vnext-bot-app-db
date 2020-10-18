@@ -85,7 +85,7 @@ namespace vNextBot.app
             }
             else if (help.IsSelected)
             {
-                await Launcher.LaunchUriAsync(new Uri("https://1drv.ms/w/s!AnBjlQFDvsITgf0Ch8mOx7hbV-6zqg?e=8sf2xu"));
+                await Launcher.LaunchUriAsync(new Uri("https://1drv.ms/w/s!AnBjlQFDvsITgf5hr8h_ZKbLYy41Ww?e=2vVqcO"));
             }
         }
 
