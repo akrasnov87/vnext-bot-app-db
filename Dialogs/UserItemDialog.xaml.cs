@@ -76,6 +76,7 @@ namespace vNextBot.app.Dialogs
                     user.b_disabled = true;
                 }
 
+                user.c_login = Login.Text;
                 user.c_fio = FIO.Text;
                 user.c_description = Description.Text;
 
