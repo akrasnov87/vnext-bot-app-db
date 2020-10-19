@@ -72,6 +72,7 @@ namespace vNextBot.app.Dialogs
                 {
                     // создание
                     user = new User();
+                    user.c_project = "IServ";
                     user.c_domain = "Compulink";
                     user.b_disabled = true;
                 }

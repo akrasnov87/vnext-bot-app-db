@@ -22,6 +22,7 @@ namespace vNextBot.Model
 
         public bool b_disabled { get; set; }
         public string c_domain { get; set; }
+        public string c_project { get; set; }
         public string c_team { get; set; }
         public int? n_pin { get; set; }
 
