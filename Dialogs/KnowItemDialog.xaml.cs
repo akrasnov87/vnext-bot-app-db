@@ -108,7 +108,7 @@ namespace vNextBot.app.Dialogs
                 action.c_const == "LINK" ||
                 action.c_const == "TEXT")
             {
-                if (string.IsNullOrEmpty(Url.Text))
+                if (string.IsNullOrEmpty(Title.Text))
                 {
                     setSummary("title не указан.");
                     args.Cancel = true;

@@ -44,7 +44,7 @@
         <TextBox Grid.Row="4" Grid.Column="1" x:Name="Url" Margin="0 10 0 0" />
 
         <TextBlock Text="title" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="5" Grid.Column="1" x:Name="Title" Margin="0 10 0 0" />
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="Title" Margin="0 10 0 0" TextWrapping="Wrap" AcceptsReturn="True" Height="50" />
 
         <CheckBox FlowDirection="LeftToRight" Grid.Row="6" x:Name="IsDisabled" Content="Отключен" IsChecked="False" Grid.ColumnSpan="2" />
 
