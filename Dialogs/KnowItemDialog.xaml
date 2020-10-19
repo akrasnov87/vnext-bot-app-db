@@ -46,7 +46,9 @@
         <TextBlock Text="title" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
         <TextBox Grid.Row="5" Grid.Column="1" x:Name="Title" Margin="0 10 0 0" TextWrapping="Wrap" AcceptsReturn="True" Height="65" FontSize="10" />
 
-        <CheckBox FlowDirection="LeftToRight" Grid.Row="6" x:Name="IsDisabled" Content="Отключен" IsChecked="False" Grid.ColumnSpan="2" />
+
+        <CheckBox FlowDirection="LeftToRight" Grid.Row="6" x:Name="IsDisabled" Content="Отключен" IsChecked="False" Grid.Column="0" Margin="0 10 0 0" />
+        <TextBox Grid.Row="6" Grid.Column="1" x:Name="Weight" Width="100" PlaceholderText="Вес" HorizontalAlignment="Right" Margin="0 10 0 0" />
 
         <TextBlock Text="Дата" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"/>
         <TextBox x:Name="Date" Margin="0 10 0 0" Grid.Row="7" Grid.Column="1" IsEnabled="False" />

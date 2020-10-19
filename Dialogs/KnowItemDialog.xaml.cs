@@ -68,9 +68,11 @@ namespace vNextBot.app.Dialogs
                     Title.Text = item.GetTitle();
                     IsDisabled.IsChecked = item.b_disabled;
                     Date.Text = item.GetDate();
+                    Weight.Text = item.c_weight.ToString();
                 }
             } else {
                 Type.SelectedValue = actionTypes.First(t => t.c_const == "TEXT");
+                Weight.Text = "D";
             }
         }
 
@@ -135,6 +137,7 @@ namespace vNextBot.app.Dialogs
                 setting.jb_tags = Newtonsoft.Json.JsonConvert.SerializeObject(Tags.Text.Split(", "));
                 setting.f_action = ((vNextBot.Model.Action)Type.SelectedValue).id;
                 setting.b_disabled = IsDisabled.IsChecked.Value;
+                setting.c_weight = Weight.Text[0];
 
                 dynamic data = new { 
                     url = Url.Text,

@@ -33,6 +33,8 @@ namespace vNextBot.Model
 
         public bool b_disabled { get; set; }
 
+        public char c_weight { get; set; }
+
         public string GetTags()
         {
             if(!string.IsNullOrEmpty(jb_tags))
