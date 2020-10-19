@@ -32,7 +32,7 @@
         <TextBlock Name="Summary" Grid.Row="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" TextWrapping="Wrap" />
 
         <TextBlock Text="Вопрос" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="Question" Margin="0 10 0 0" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Height="50" />
+        <TextBox x:Name="Question" Margin="0 10 0 0" Grid.Row="1" Grid.Column="1" />
 
         <TextBlock Text="Тип" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
         <ComboBox PlaceholderText="Тип" Grid.Row="2" Grid.Column="1" x:Name="Type" Margin="0 10 0 0" SelectionChanged="Type_SelectionChanged" />
@@ -44,7 +44,7 @@
         <TextBox Grid.Row="4" Grid.Column="1" x:Name="Url" Margin="0 10 0 0" />
 
         <TextBlock Text="title" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="5" Grid.Column="1" x:Name="Title" Margin="0 10 0 0" TextWrapping="Wrap" AcceptsReturn="True" Height="50" />
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="Title" Margin="0 10 0 0" TextWrapping="Wrap" AcceptsReturn="True" Height="65" FontSize="10" />
 
         <CheckBox FlowDirection="LeftToRight" Grid.Row="6" x:Name="IsDisabled" Content="Отключен" IsChecked="False" Grid.ColumnSpan="2" />
 
